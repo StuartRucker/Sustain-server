@@ -18,7 +18,7 @@ router.get('/register', function(req, res) {
 });
 
 router.post('/register', function(req, res, next) {
-    if (req.user && req.user.username == "test") {
+    if (req.user && req.user.username == "admin") {
         Account.register(new Account({
             username: req.body.username
         }), req.body.password, function(err, account) {
