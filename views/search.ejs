@@ -1,0 +1,67 @@
+<%- include header.ejs %>
+<%- include nav.ejs %>
+<%- include jumbotron.ejs %>
+
+<div style="max-width: 1100px; margin-left: auto; margin-right: auto;">
+
+
+            <div class="row">
+                <div class="col l2"></div>
+                <div class="col l8">
+
+                    <div class="row">
+                      <form id="search-form">
+                        <div class="input-field col s12">
+                            <input placeholder="Search" id="search-field" type="text" class="validate valid">
+                        </div>
+                      </form>
+                    </div>
+                    <div style = "min-height: 500px" id = "search-results">
+
+
+                    </div>
+                </div>
+                <div class="col l2"></div>
+            </div>
+        </div>
+
+<script>
+var formatDate = function(date) {
+  var monthNames = [
+    "January", "February", "March",
+    "April", "May", "June", "July",
+    "August", "September", "October",
+    "November", "December"
+  ];
+
+  if( !(date instanceof Date)){
+    date = new Date(date.toString());
+  }
+  date.getDate();
+  console.log("got date: " + date.getDate());
+  var day = date.getDate();
+  var monthIndex = date.getMonth();
+  var year = date.getFullYear();
+
+
+  return monthNames[monthIndex] + ' ' + day +  ', ' + year;
+}
+
+$( "#search-form" ).submit(function( event ) {
+  event.preventDefault();
+  $.get("/api/search", {query: $("#search-field").val() }, function(data){
+
+    $("#search-results").html("");
+    $("#search-results").append("<span> Showing Results for " + $("#search-field").val() +"</span>");
+
+    for(var i = 0; i < data.length; i ++){
+      console.log(data[i][1].article);
+      console.log(new EJS("/ejs/large-view.ejs", {article: data[i][1].article, formatDate: formatDate}));
+      $("#search-results").append(new EJS({url: "/ejs/large-view.ejs"}).render({article: data[i][1].article, formatDate: formatDate}));
+    }
+
+  })
+});
+</script>
+
+<%- include footer.ejs %>

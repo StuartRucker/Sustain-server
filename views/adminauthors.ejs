@@ -1,0 +1,129 @@
+<html>
+
+    <head>
+        <title> Authors </title>
+        <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <style>
+            .loader {
+                border: 16px solid #f3f3f3;
+                /* Light grey */
+                border-top: 16px solid #3498db;
+                /* Blue */
+                border-radius: 50%;
+                width: 120px;
+                height: 120px;
+                animation: spin 2s linear infinite;
+                z-index: 100000;
+                position: fixed;
+                top: 30%;
+                left: 40%;
+            }
+
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+        <script>
+        $(document).ready(function(){
+          $(".loader").hide();
+        });
+
+        function trash(id) {
+            $.post("/admin/delete-author", {
+                "id": id
+            }, function(data) {
+                if (data.success) {
+                    $("#" + id).hide();
+                } else {
+                    alert("failed to delete article");
+                }
+            });
+        }
+
+        function toggle(id){
+
+            $.post("/admin/toggle-visible", {
+                "id": id,
+                "visible": $("#" + id + " input[type=checkbox]").is(":checked")
+            }, function(data) {
+
+            });
+
+
+        }
+
+
+        </script>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1>Manage Authors</h1>
+            <hr>
+
+            <a href = "/admin/edit-author"<button class = "btn btn-default"><h4>Add new</h4></button></a>
+
+
+
+
+            <hr>
+            <h3> Existing Authors </h3>
+            <table id="article-table" class="table-striped padded" style="width:100%;">
+                <thead>
+                    <td> Email </td>
+                    <td> Name </td>
+                    <td> Update </td>
+                    <td> Visible on <a href = "/about">/about</a></td>
+                    <td> Delete </td>
+                </thead>
+
+
+              <%for(var i = 0; i < data.length; i ++){%>
+                  <tr id = "<%=data[i]._id%>">
+                    <td> <a href = "/author/<%=data[i].email%>"><%=data[i].email%></a> </td>
+                    <td> <%=data[i].name%> </td>
+
+                    <td> <a href = "/admin/edit-author/<%=data[i].email%>"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
+                    <td> <input onclick = "toggle('<%=data[i]._id%>')" type="checkbox" <%= (data[i].visible)? "checked": "" %> </td>
+                    <td> <span onclick="trash('<%=data[i]._id%>')" class="glyphicon glyphicon-trash" aria-hidden="true"></span></td></td>
+                  </tr>
+              <%}%>
+
+              </table>
+
+
+        </div>
+
+
+        <!-- Modal -->
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Is this Article Correct</h4>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="loader"></div>
+    </body>
+
+</html>

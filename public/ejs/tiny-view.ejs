@@ -1,0 +1,20 @@
+<div class="col l12 m6 s12">
+    <div class="card-panel grey lighten-5 z-depth-1 hoverable sticky ">
+        <%if(imageID && imageID.length > 0 && imageID[0].length > 1){%><div class="image-preview left" style="background-image: url(/dynamic/normal/<%=imageID[0]%>.png)"></div><%}%>
+        <a <%try{%> href = "/article/<%=url%>"<%}catch(e){%>"<%}%>  class="sticky-rapper black-text">
+            <%=title%>
+        </a>
+
+        <%if(typeof authorInfo == 'object' && authorInfo &&  authorInfo.length > 0){%>
+        <small class="grey-text text-lighten-1 "> by
+          <%for(var i = 0; i < authorInfo.length; i ++){%>
+              <%if(authorInfo[i].name ){%> <a href="/author/<%=authorInfo[i].email%>" class="green-text underline"><%=authorInfo[i].name%></a> <%}else{%>
+              <span class="green-text "><%=authorInfo[i].email%></span> <%}%>
+              <%if(i != authorInfo.length - 1){%>
+                <span class="black-text "> | </span>
+              <%}%>
+          <%}%>
+          </small>
+        <%}%>
+    </div>
+</div>

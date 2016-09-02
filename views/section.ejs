@@ -1,0 +1,41 @@
+<%- include header.ejs %>
+<%- include nav.ejs %>
+<%- include jumbotron.ejs %>
+
+<div style="max-width: 1100px; margin-left: auto; margin-right: auto;">
+  <div class="row" style="margin-top: 16px;">
+              <div id = "big-preview" class="col l8">
+                <%for(var i = 0; i < Math.min(2, data.length); i ++){
+                    var article = data[i];
+                  %>
+                  <%- include large-view.ejs %>
+
+                <%}%>
+
+              </div>
+              <div class="col l4 stickycontainer" style="">
+                  <div class="row">
+                    <%for(var i = 2; i < Math.min(6, data.length); i ++){
+                        var article = data[i];
+                      %>
+                      <%- include tiny-view.ejs %>
+
+                    <%}%>
+                  </div>
+              </div>
+            </div>
+
+        <div class = "row">
+          <%for(var i = 6; i < Math.min(12, data.length); i ++){
+              var article = data[i];
+            %>
+            <%- include medium-view.ejs %>
+
+          <%}%>
+        </div>
+
+
+</div>
+
+
+<%- include footer.ejs %>

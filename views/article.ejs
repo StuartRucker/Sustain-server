@@ -1,0 +1,55 @@
+<%- include header.ejs %>
+<%- include nav.ejs %>
+<%- include jumbotron.ejs %>
+
+<div style="max-width: 1100px; margin-left: auto; margin-right: auto;">
+    <div class="row">
+        <div class="col l8 m12">
+            <div class="card article-margins right" style="max-width: 700px; width: 100%">
+                <div class="card-content">
+                    <h1 class = "h5"><%=title%></h1>
+                    <hr class="article-bottom">
+                    <div class="row" style="margin-bottom: 35px;">
+                        <div class="col s6">
+                            <%-formatAuthors(authorInfo)%>
+                        </div>
+                        <div class="right col s6">
+                            <span class="right"><%= formatDate(date)%></span>
+                        </div>
+                    </div>
+                    <div class="article">
+                        <%- content %>
+                    </div>
+                </div>
+                <div class="card-action">
+                    <%if(section != "NONE"){%><a href = "/section/<%=section%>" class  = "underline grey-text text-lighten-1"> See more in <%=section%> </a><%}%>
+                </div>
+            </div>
+
+        </div>
+        <div class="col l4 m12 stickycontainer" style="">
+            <div id = "sticky-row" class="row">
+
+            </div>
+        </div>
+    </div>
+    <div id = "medium-preview" class="row">
+
+    </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $.get("/api/list-articles", {url: "<%-url%>", number: 10}, function(data, status){
+        for(var i = 0; i < Math.min(data.length-3, 6); i ++){
+          console.log(data[i]);
+          $("#sticky-row").append(new EJS({url: '/ejs/tiny-view.ejs'}).render(data[i]));
+        }
+        for(var i = Math.max(0, data.length-3); i < data.length; i ++){
+          $("#medium-preview").append(new EJS({url: '/ejs/medium-view.ejs'}).render(data[i]));
+        }
+    });
+  });
+</script>
+
+<%- include footer.ejs %>

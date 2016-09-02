@@ -1,0 +1,34 @@
+<div onclick = "window.location.href = '/article/<%=article.url%>';" class = "card-panel grey lighten-5 z-depth-1 no-padding hoverable article-preview">
+    <div class="row">
+        <%if(article.imageID && article.imageID.length > 0 && article.imageID[0].length > 1){%>
+        <div class="col m4  s12 no-padding">
+
+            <img alt = "<%=article.title%>" class="article-preview" src="/dynamic/normal/<%=article.imageID[0]%>.png">
+
+        </div>
+        <%}%>
+        <div class="col m8 s12">
+            <h5 style="margin-bottom: 2px;">
+                  <a href = "/article/<%=article.url%>" class="preview-link"><%=article.title%></a>
+            </h5>
+
+            <span class="grey-text text-lighten-1 left">
+
+              <%if(typeof article.authorInfo == 'object' && article.authorInfo &&  article.authorInfo.length > 0){%>
+
+                <%for(var i = 0; i < article.authorInfo.length; i ++){%>
+                    <%if(article.authorInfo[i].name ){%> <a href="/author/<%=article.authorInfo[i].email%>" class="green-text underline"><%=article.authorInfo[i].name%></a> <%}else{%>
+                    <span class="green-text "><%=article.authorInfo[i].email%></span> <%}%>
+                    <%if(i != article.authorInfo.length - 1){%>
+                      <span class="black-text "> | </spaN>
+                    <%}%>
+                <%}%>
+              <%}%>
+
+            <%=formatDate(article.date)%></span>
+            <br>
+
+            <p><%=article.summary%></p>
+        </div>
+    </div>
+</div>

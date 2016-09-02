@@ -1,0 +1,19 @@
+<div class="hex grid-3" style = "z-index: <%=zindex%>">
+
+    <%console.log("article exists " + JSON.stringify(article));
+    try{
+      if(!article.imageID[0]) throw "";
+      %>
+
+          <a class="leaf-1" href="/article/<%=article.url%>" style="overflow: hiden; opacity: .9; background-image: url(/dynamic/<%= (treeType == 'leaf')? 'green': 'brown'%>/<%=article.imageID[0]%>.png);" >
+    <%}catch(e){%>
+        <a class="leaf-1" href="/article/<%=article.url%>" style="overflow: hiden; opacity: .9; background-color: <%= (treeType == 'leaf')? '#2ECC71': '#331a00'%>;">
+    <%}%>
+
+        <div class="inner <%=treeType%>">
+            <h3 data-ot="<%-article.summary%>" data-ot-style="dark" data-ot-target= "true" data-ot-stem= "true" ><%=shortenTitle(article.title)%></h3>
+        </div>
+        <div class="hex-1"></div>
+        <div class="hex-2"></div>
+    </a>
+</div>

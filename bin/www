@@ -1,0 +1,142 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var debug = require('debug')('passport-local-express4:server');
+var http = require('http');
+
+var googledrive = require("../util/googledrive.js");
+googledrive.initialize("",function(_){});
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
+
+//add helper functions for ejs templates
+app.locals.formatAuthors = function(authorInfo) {
+  var string = "";
+  for(var i = 0; i < authorInfo.length; i ++){
+    if(authorInfo[i].name){
+      string += '<a href="/author/'+ authorInfo[i].email +'" class="author underline left green-text">'+authorInfo[i].name+' </a> '
+    }else{
+      string += authorInfo[i].email;
+
+    }
+
+
+  }
+  return string;
+}
+
+app.locals.formatDate = function(date) {
+  var monthNames = [
+    "January", "February", "March",
+    "April", "May", "June", "July",
+    "August", "September", "October",
+    "November", "December"
+  ];
+
+  if( !(date instanceof Date)){
+    date = new Date(date.toString());
+  }
+  date.getDate();
+  console.log("got date: " + date.getDate());
+  var day = date.getDate();
+  var monthIndex = date.getMonth();
+  var year = date.getFullYear();
+
+
+  return monthNames[monthIndex] + ' ' + day +  ', ' + year;
+}
+
+app.locals.formatMetaTitle = function(title){
+  return title.replace(/\s/g, ",");
+}
+
+
+app.locals.shortenTitle = function(title){
+  if(title && title.length > 45){
+    title = title.substring(0,45) + "...";
+  }
+  return title
+}

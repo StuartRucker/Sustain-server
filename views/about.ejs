@@ -1,0 +1,68 @@
+<% var title = "About Sustain, Exeter's Environemental Magazine";%>
+<% var section = "About";%>
+<%- include header.ejs %>
+<%- include nav.ejs %>
+<%- include jumbotron.ejs %>
+
+<div style="max-width: 1100px; margin-left: auto; margin-right: auto;">
+     <div class="row" style="margin-top: 20px;">
+         <div class="col s12">
+             <h3>About</h3>
+             <div class="card-panel grey lighten-5 z-depth-1 no-padding">
+                 <div class="row">
+                     <div class="col m12">
+                         <h5>Our Mission</h5>
+                         <p> Sustain publishes environmentally conscious articles written by students at Phillips Exeter Academy who hope to bring awareness to current climate issues. Due to the grueling schedule at the Academy, many students don't
+                             have time to spend learning about the many environmental problems that the world faces today. We are hoping that our online publication will provide easy access to articles and create more fellow tree huggers on this
+                             campus. </p>
+                     </div>
+                     <div class="col m5">
+                         <h5>Write For us</h5>
+                         <p> Show up to The * Room at * o'clock on *, or email pedro@sanson.com </p>
+                     </div>
+                     <div class="col m2"></div>
+                     <div class="col m5">
+                         <h5>Executive Editors</h5>
+                         <p> Pedro Repsold de Sanson, Lara Galligani, Lily friedland, Sophia Oguri</p>
+                     </div>
+                 </div>
+             </div>
+             <div class="card-panel grey lighten-5 z-depth-1 no-padding">
+                 <div class="row">
+                     <div class="col m12">
+                         <h5>Our Writers</h5>
+                     </div>
+                     <div class="col m4 s12">
+                         <ul>
+
+                              <%
+                              var i;
+
+                              for(i = 0 ; i <= data.length/3; i ++){ %>
+                                <li><a class="grey-text text-darken-1 underline" href="/author/<%=data[i].email%>"><%=data[i].name%></a></li>
+                              <% } %>
+                         </ul>
+                     </div>
+                     <div class="col m4 s12">
+                         <ul>
+                           <% while(i <= 2*data.length/3) {%>
+                             <li><a class="grey-text text-darken-1 underline" href="/author/<%=data[i].email%>"><%=data[i].name%></a></li>
+
+                           <% i ++;} %>
+                         </ul>
+                     </div>
+                     <div class="col m4 s12">
+                         <ul>
+                           <% while(i < data.length){%>
+                             <li><a class="grey-text text-darken-1 underline" href="/author/<%=data[i].email%>"><%=data[i].name%></a></li>
+
+                           <%  i ++;} %>
+                         </ul>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
+
+<%- include footer.ejs %>
