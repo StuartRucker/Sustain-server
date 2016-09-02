@@ -1,6 +1,6 @@
 <div onclick = "window.location.href = '/article/<%=article.url%>';" class="col m4">
     <div class="card-panel grey lighten-5 z-depth-1 hoverable no-padding">
-        <%if(article.imageID && article.imageID.length > 0 && article.imageID[0].length > 1){%><img alt = "<%=article.title%>" style="display:block; margin-left: auto; margin-right: auto;" class="med-preview" src="/dynamic/normal/<%=article.imageID[0]%>.png"></img><%}%>
+        <%if(article.imageID && article.imageID.length > 0 && article.imageID[0].length > 1){%><img alt = "<%=article.title%>" style="display:block; margin-left: auto; margin-right: auto;" class="med-preview" src="/dynamic/medium/<%=article.imageID[0]%>.png"></img><%}%>
         <div style="padding: 6px;">
             <a class="preview-link" href="/article/<%=article.url%>"><span class = "h7"><%=title%></span></a>
             <%if(typeof article.authorInfo == 'object' && article.authorInfo &&  article.authorInfo.length > 0){%>

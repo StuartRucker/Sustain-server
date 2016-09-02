@@ -157,7 +157,7 @@ router.get('/list-articles', isAuthenticated, function(req, res) {
     var collection = req.db.get("articles");
 
     collection.find({}, {
-        limit: 2,
+        limit: 25,
         sort: {
             date: 1
         },

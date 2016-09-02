@@ -22,6 +22,8 @@ function homeColor(inName, outName, color) {
 }
 
 
+
+
 var download = function(uri, filename, callback) {
     request.head(uri, function(err, res, body) {
         request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
@@ -32,21 +34,37 @@ var download = function(uri, filename, callback) {
 
 var savePicture = function(url, id, callback) {
 
-    download(url, "public/dynamic/normal/" + id + ".png", function() {
-        var filePath = "public/dynamic/normal/" + id + ".png";
+    download(url, "../dynamic/normal/" + id + ".png", function() {
+        var filePath = "../dynamic/normal/" + id + ".png";
 
         //these will not be used immediately so can be async
-        homeColor(filePath, "public/dynamic/brown/" + id + ".png", brown);
-        homeColor(filePath, "public/dynamic/green/" + id + ".png", green);//these will not be used immedi
+        homeColor(filePath, "../dynamic/brown/" + id + ".png", brown);
+        homeColor(filePath, "../dynamic/green/" + id + ".png", green);
+
+        resizeMedium(filePath, "../dynamic/medium/" + id + ".png");
+        resizeTiny(filePath, "../dynamic/tiny/" + id + ".png");
 
         callback(id);
     });
 
 }
 
+function resizeMedium(inName, outName){
+  var i = new Jimp(inName, function() {
+      this.resize(370, Jimp.AUTO)
+      .write(outName); // save
+  });
+}
+
+function resizeTiny(inName, outName){
+  var i = new Jimp(inName, function() {
+      this.resize(120, Jimp.AUTO)
+      .write(outName); // save
+  });
+}
 
 var saveAuthor = function(ogpath, name, callback){
-  fs.rename(ogpath, "public/dynamic/author/" + name + ".png", function(){
+  fs.rename(ogpath, "../dynamic/author/" + name + ".png", function(){
       callback();
   });
 };

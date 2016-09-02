@@ -53,6 +53,7 @@ app.use(passport.initialize());
 app.use(flash());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use("/dynamic", express.static(path.join(__dirname, '../dynamic')));
 
 app.use('/admin', admin);
 app.use('/', routes);

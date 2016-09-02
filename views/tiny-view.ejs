@@ -1,6 +1,6 @@
 <div class="col l12 m6 s12">
     <div class="card-panel grey lighten-5 z-depth-1 hoverable sticky ">
-        <%if(article.imageID && article.imageID.length > 0 && article.imageID[0].length > 1){%><div class="image-preview left" style="background-image: url(/dynamic/normal/<%=article.imageID[0]%>.png)"></div><%}%>
+        <%if(article.imageID && article.imageID.length > 0 && article.imageID[0].length > 1){%><div class="image-preview left" style="background-image: url(/dynamic/tiny/<%=article.imageID[0]%>.png)"></div><%}%>
         <a <%try{%> href = "/article/<%=article.url%>"<%}catch(e){%>"<%}%>  class="sticky-rapper black-text">
             <%=article.title%>
         </a>
