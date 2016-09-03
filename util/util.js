@@ -118,6 +118,37 @@ var updateAuthor = function(collection, email, name) {
     });
 }
 
+var deleteAuthor = function(collection, email) {
+    console.log("deleting author");
+    collection.find({
+        authors: email
+    }, {}, function(e, docs) {
+        console.log(docs.length + " results");
+        for (var i = 0; i < docs.length; i++) {
+
+            //now iterate throught that articles articeInfo
+            console.log("looping throught docs");
+            if (docs[i].authorInfo) {
+
+                for (var k = 0; k < docs[i].authorInfo.length; k++) {
+
+                    if (docs[i].authorInfo[k].email.toLowerCase().trim() == email.toLowerCase().trim()) {
+                        docs[i].authorInfo[k].name = null;
+
+                    }
+                }
+                docs[i].authorInfoString = JSON.stringify(docs[i].authorInfo);
+                // console.log(JSON.stringify(docs[i]));
+                collection.update({
+                    _id: docs[i]._id
+                }, docs[i], {}, function(e, docs) {
+
+                });
+            }
+        }
+    });
+}
+
 var getSummary = function(content) {
     var regex1 = /(<([^>]+)>)/ig;
     var regex2 = /\s/ig;
@@ -173,3 +204,4 @@ module.exports.getUniqueUrl = getUniqueUrl;
 module.exports.googleIdIsUsed = googleIdIsUsed;
 module.exports.getSummary = getSummary;
 module.exports.getAuthorInfo = getAuthorInfo;
+module.exports.deleteAuthor = deleteAuthor;

@@ -304,16 +304,34 @@ router.get('/list-authors', isAuthenticated, function(req, res) {
 router.post('/delete-author', isAuthenticated, function(req, res) {
     var collection = req.db.get("authors");
     var id = req.body.id;
-    collection.remove({
-        _id: id
-    }, function(e, docs) {
-        if (e) res.json({
-            success: false
-        });
-        else res.json({
-            success: true
-        });
+
+    console.log(JSON.stringify({_id: id}));
+    collection.find({_id: id}, {}, function(e, docs){
+      console.log("found author")
+      console.log(JSON.stringify(docs));
+      if(!e && docs && docs[0] && docs[0].email){
+        console.log("deleting author")
+        util.deleteAuthor(req.db.get("articles"), docs[0].email);
+      }
+
+
+      collection.remove({
+          _id: id
+      }, function(e, docs) {
+          if (e) res.json({
+              success: false
+          });
+          else res.json({
+              success: true
+          });
+      });
+      
     });
+
+
+
+
+
 });
 
 router.get('/delete-author', isAuthenticated, function(req, res) {
@@ -383,7 +401,7 @@ router.post('/edit-author', isAuthenticated, upload.single('image'), function(re
             })
         });
     } else {
-      console.log(req.body.visible);
+
       if(!req.body.visible) req.body.visible = "false";
       if(req.body.visible.toString() === "true" || req.body.visible.toString() === "on" ) req.body.visible = true;
       else req.body.visible = false;

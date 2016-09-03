@@ -99,7 +99,7 @@ app.locals.formatAuthors = function(authorInfo) {
     if(authorInfo[i].name){
       string += '<a href="/author/'+ authorInfo[i].email +'" class="author underline left green-text">'+authorInfo[i].name+' </a> '
     }else{
-      string += authorInfo[i].email;
+      string += '<span style = "margin-right: 10px">' + authorInfo[i].email + '</span>';
 
     }
 
