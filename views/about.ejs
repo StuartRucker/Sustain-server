@@ -38,14 +38,14 @@
                               <%
                               var i;
 
-                              for(i = 0 ; i <= Math.min(data.length, data.length/3); i ++){ %>
+                              for(i = 0 ; i <= Math.min(data.length-1, data.length/3); i ++){ %>
                                 <li><a class="grey-text text-darken-1 underline" href="/author/<%=data[i].email%>"><%=data[i].name%></a></li>
                               <% } %>
                          </ul>
                      </div>
                      <div class="col m4 s12">
                          <ul>
-                           <% while(i <= Math.min(data.length,2*data.length/3)) {%>
+                           <% while(i <= Math.min(data.length-1,2*data.length/3)) {%>
                              <li><a class="grey-text text-darken-1 underline" href="/author/<%=data[i].email%>"><%=data[i].name%></a></li>
 
                            <% i ++;} %>

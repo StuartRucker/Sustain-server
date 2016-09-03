@@ -33,7 +33,7 @@
                 <br>
                 <textarea maxlength="250" form = "editauthorform" name = "about" required><%=(about)?about:""%></textarea>
 
-                <br><br><div style = "font-size: 16px"> <input type = "checkbox" <%if(email){%>checked<%}%> name = "visible">  Visible on <a href = "/about">/about</a></div>
+                <br><br><div style = "font-size: 16px"> <input type = "checkbox" <%if(visible){%>checked<%}%> name = "visible">  Visible on <a href = "/about">/about</a></div>
                 <br>
 
                 <br> Picture:<br> <input <%if(!email){%>required<%}%> type="file" accept="image/*" name="image">

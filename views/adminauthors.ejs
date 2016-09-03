@@ -52,7 +52,7 @@
 
             $.post("/admin/toggle-visible", {
                 "id": id,
-                "visible": $("#" + id + " input[type=checkbox]").is(":checked")
+                "visible": ($("#" + id + " input[type=checkbox]").is(":checked")).toString()
             }, function(data) {
 
             });

@@ -383,6 +383,11 @@ router.post('/edit-author', isAuthenticated, upload.single('image'), function(re
             })
         });
     } else {
+      console.log(req.body.visible);
+      if(!req.body.visible) req.body.visible = "false";
+      if(req.body.visible.toString() === "true" || req.body.visible.toString() === "on" ) req.body.visible = true;
+      else req.body.visible = false;
+
         req.db.get("authors").update({
             email: req.body.email
         }, req.body, {
@@ -414,7 +419,9 @@ router.get('/authors', isAuthenticated, function(req, res) {
 
 router.post('/toggle-visible', isAuthenticated, upload.single('image'), function(req, res) {
     var collection = req.db.get("authors");
-    var vis = Boolean(req.body.visible);
+    console.log(req.body.visible)
+
+    var vis = req.body.visible.toString() === "true";
     console.log("setting it to " + vis);
     collection.update({
         _id: req.body.id
@@ -422,7 +429,7 @@ router.post('/toggle-visible', isAuthenticated, upload.single('image'), function
         $set: {
             visible: vis
         }
-    }, function(er, d) {
+    }, {}, function(er, d) {
         res.json({
             error: false
         });
