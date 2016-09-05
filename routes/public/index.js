@@ -1,6 +1,7 @@
 var express = require('express');
 var util = require("../../util/util")
 var router = express.Router();
+var ejs = require('ejs');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -31,6 +32,21 @@ router.get('/section/:section', function(req, res, next) {
 
 router.get('/search', function(req, res, next) {
     res.render("search", {section: "Search", title: "Search for environmental articles by Exonians"});
+});
+
+router.get('/sitemap.xml', function(req, res, next) {
+    var obj = {};
+
+    req.db.get("authors").find({},{}, function(e, docs){
+      obj.author = docs;
+      req.db.get("articles").find({},{}, function(err, ducs){
+        obj.article = ducs;
+        res.type('text/xml');
+        res.render("sitemap", obj);
+        // res.render("sitemap", obj);
+      });
+    });
+
 });
 
 router.get('/article/:title', function(req, res, next) {
