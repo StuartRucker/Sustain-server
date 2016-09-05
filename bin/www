@@ -120,7 +120,6 @@ app.locals.formatDate = function(date) {
     date = new Date(date.toString());
   }
   date.getDate();
-  console.log("got date: " + date.getDate());
   var day = date.getDate();
   var monthIndex = date.getMonth();
   var year = date.getFullYear();

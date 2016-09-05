@@ -88,15 +88,15 @@ var googleIdIsUsed = function(collection, id, callback) {
 }
 
 var updateAuthor = function(collection, email, name) {
-    console.log("updateing author");
+
     collection.find({
         authors: email
     }, {}, function(e, docs) {
-        console.log(docs.length + " results");
+
         for (var i = 0; i < docs.length; i++) {
             // console.log(JSON.stringify(docs[i]));
             //now iterate throught that articles articeInfo
-            console.log("looping throught docs");
+
             if (docs[i].authorInfo) {
 
                 for (var k = 0; k < docs[i].authorInfo.length; k++) {
@@ -107,7 +107,7 @@ var updateAuthor = function(collection, email, name) {
                     }
                 }
                 docs[i].authorInfoString = JSON.stringify(docs[i].authorInfo);
-                // console.log(JSON.stringify(docs[i]));
+
                 collection.update({
                     _id: docs[i]._id
                 }, docs[i], {}, function(e, docs) {
@@ -119,15 +119,15 @@ var updateAuthor = function(collection, email, name) {
 }
 
 var deleteAuthor = function(collection, email) {
-    console.log("deleting author");
+
     collection.find({
         authors: email
     }, {}, function(e, docs) {
-        console.log(docs.length + " results");
+
         for (var i = 0; i < docs.length; i++) {
 
             //now iterate throught that articles articeInfo
-            console.log("looping throught docs");
+
             if (docs[i].authorInfo) {
 
                 for (var k = 0; k < docs[i].authorInfo.length; k++) {
@@ -138,7 +138,7 @@ var deleteAuthor = function(collection, email) {
                     }
                 }
                 docs[i].authorInfoString = JSON.stringify(docs[i].authorInfo);
-                // console.log(JSON.stringify(docs[i]));
+
                 collection.update({
                     _id: docs[i]._id
                 }, docs[i], {}, function(e, docs) {
@@ -161,7 +161,7 @@ var getSummary = function(content) {
 
 //goes through the authors, and tries to match them with a name
 var getAuthorInfo = function(collection, article, callback) {
-    console.log("called author info")
+
     var authorInfo = [];
     for (var i = 0; i < article.authors.length; i++) {
         authorInfo.push({
@@ -170,7 +170,7 @@ var getAuthorInfo = function(collection, article, callback) {
         });
     }
     authorInfoHelper(collection, 0, authorInfo, function(data) {
-        console.log("callback of " + data);
+
         callback(data);
     });
 };
