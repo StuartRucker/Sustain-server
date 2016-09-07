@@ -60,7 +60,7 @@ nav a, nav .brand-logo, nav li a, nav li label i {
 }
 
 .poem p {
-    margin-top: 0px;
+    margin-top: 0px !important;
 }
 .article-picture {
     margin-top: 4px;
