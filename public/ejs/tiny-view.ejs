@@ -1,4 +1,4 @@
-<div class="col l12 m6 s12">
+<div onclick = "window.location.href = '/article/<%=url%>';" class="col l12 m6 s12">
     <div class="card-panel grey lighten-5 z-depth-1 hoverable sticky ">
         <%if(imageID && imageID.length > 0 && imageID[0].length > 1){%><div class="image-preview left" style="background-image: url(/dynamic/tiny/<%=imageID[0]%>.png)"></div><%}%>
         <a <%try{%> href = "/article/<%=url%>"<%}catch(e){%>"<%}%>  class="sticky-rapper black-text">

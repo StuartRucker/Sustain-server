@@ -22,7 +22,8 @@
                     </div>
                 </div>
                 <div class="card-action">
-                    <%if(section != "NONE"){%><a href = "/section/<%=section%>" class  = "underline grey-text text-lighten-1"> See more in <%=section%> </a><%}%>
+                    <%console.log(section);
+                    if(section != "no section"){%><a href = "/section/<%=section%>" class  = "underline grey-text text-lighten-1"> See more in <%=section%> </a><%}%>
                 </div>
             </div>
 

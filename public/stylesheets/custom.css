@@ -56,7 +56,11 @@ nav a, nav .brand-logo, nav li a, nav li label i {
 }
 .article p {
     margin-top: 17px !important;
-    font-size: 16px;
+    font-size: 17px;
+}
+
+.poem p {
+    margin-top: 0px;
 }
 .article-picture {
     margin-top: 4px;

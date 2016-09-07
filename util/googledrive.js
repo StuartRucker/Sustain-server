@@ -32,7 +32,7 @@ var initialize = function(fileId, callback) {
         var clientSecret = credentials.installed.client_secret;
         var clientId = credentials.installed.client_id;
         var redirectUrl = credentials.installed.redirect_uris[0];
-        // console.log(clientSecret + " " + clientId + " " + redirectUrl);
+
         var oauth2Client = new OAuth2(clientId, clientSecret, redirectUrl);
         oathClient = oauth2Client;
         fs.readFile(TOKEN_PATH, function(err, token) {
@@ -65,7 +65,7 @@ var getArticle = function(fileId, callback) {
                 html += part;
             })
             .on('error', function(err) {
-                console.log('Error during download', err);
+
             }).on('end', function() {
                 var article = convertToArticle(html);
                 callback(article);
@@ -90,9 +90,9 @@ var convertToArticle = function(html){
 
   try{
     var potentialErrorJson = JSON.parse(html);
-    console.log(potentialErrorJson);
+
     if(potentialErrorJson && potentialErrorJson.error){
-      console.log('returning false')
+
       return false;
     }
   }catch(e){
@@ -119,7 +119,7 @@ var convertToArticle = function(html){
           article.imageURL.push(url);
           article.imageID.push(id);
       });
-      // console.log("newline:");
+
 
       var pText = $(this).text();
       var isMetaData = false;
@@ -135,11 +135,11 @@ var convertToArticle = function(html){
               } else if (key == "authors") {
                   article.authors = (match.trim()).split(",");
                   for (var i = 0; i < article.authors.length; i++) {
-                      article.authors[i] = article.authors[i].trim();
+                      article.authors[i] = article.authors[i].trim().toLowerCase();
                   }
               }else if (key == "section") {
                   article.section = util.sectionToId((match.trim()).split(","));
-                  console.log("sectionid = " + article.section)
+
               }
           }
       }

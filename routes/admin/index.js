@@ -107,7 +107,7 @@ router.post('/new-article', isAuthenticated, function(req, res) {
                 if (article != false) {
                     savepictureHelper(0, article, function() {
                         article.googleid = id;
-                        console.log('about to get author info')
+
                         util.getAuthorInfo(req.db.get("authors"), article, function(info) {
                             article.authorInfo = info;
                             article.authorInfoString = JSON.stringify(info);
@@ -134,7 +134,7 @@ router.post('/confirm-article', isAuthenticated, function(req, res) {
         if (message.error) {
             res.json(message);
         } else {
-            console.log("getting unique url")
+
             util.getUniqueUrl(articleToSave.title, collection, function(url) {
                 articleToSave.url = url;
                 //add 180 character summary
@@ -258,14 +258,14 @@ router.post('/refresh-article', isAuthenticated, function(req, res) {
                                 article.authorInfo = info;
                                 article.authorInfoString = JSON.stringify(info);
                                 article.summary = util.getSummary(article.content);
-                              collection.update({
-                                  _id: id
-                              }, article, function(err, updatedata) {
-                                  if (err) res.json({
-                                      error: "Could not find article"
-                                  });
-                                  else res.json(article)
-                              });
+                                collection.update({
+                                    _id: id
+                                }, article, function(err, updatedata) {
+                                    if (err) res.json({
+                                        error: "Could not find article"
+                                    });
+                                    else res.json(article)
+                                });
                             });
                         }
                     });
@@ -305,27 +305,29 @@ router.post('/delete-author', isAuthenticated, function(req, res) {
     var collection = req.db.get("authors");
     var id = req.body.id;
 
-    console.log(JSON.stringify({_id: id}));
-    collection.find({_id: id}, {}, function(e, docs){
-      console.log("found author")
-      console.log(JSON.stringify(docs));
-      if(!e && docs && docs[0] && docs[0].email){
-        console.log("deleting author")
-        util.deleteAuthor(req.db.get("articles"), docs[0].email);
-      }
+
+    collection.find({
+        _id: id
+    }, {}, function(e, docs) {
 
 
-      collection.remove({
-          _id: id
-      }, function(e, docs) {
-          if (e) res.json({
-              success: false
-          });
-          else res.json({
-              success: true
-          });
-      });
-      
+        if (!e && docs && docs[0] && docs[0].email) {
+
+            util.deleteAuthor(req.db.get("articles"), docs[0].email);
+        }
+
+
+        collection.remove({
+            _id: id
+        }, function(e, docs) {
+            if (e) res.json({
+                success: false
+            });
+            else res.json({
+                success: true
+            });
+        });
+
     });
 
 
@@ -387,6 +389,10 @@ router.get('/edit-author', isAuthenticated, function(req, res) {
 });
 
 router.post('/edit-author', isAuthenticated, upload.single('image'), function(req, res) {
+    if (!req.body.visible) req.body.visible = "false";
+    if (req.body.visible.toString() === "true" || req.body.visible.toString() === "on") req.body.visible = true;
+    else req.body.visible = false;
+    if (req.body.email) req.body.email = req.body.email.toLowerCase();
 
     if (req.file) {
         pSaver.saveAuthor(req.file.path, req.body.email, function() {
@@ -402,9 +408,7 @@ router.post('/edit-author', isAuthenticated, upload.single('image'), function(re
         });
     } else {
 
-      if(!req.body.visible) req.body.visible = "false";
-      if(req.body.visible.toString() === "true" || req.body.visible.toString() === "on" ) req.body.visible = true;
-      else req.body.visible = false;
+
 
         req.db.get("authors").update({
             email: req.body.email
@@ -437,10 +441,10 @@ router.get('/authors', isAuthenticated, function(req, res) {
 
 router.post('/toggle-visible', isAuthenticated, upload.single('image'), function(req, res) {
     var collection = req.db.get("authors");
-    console.log(req.body.visible)
+
 
     var vis = req.body.visible.toString() === "true";
-    console.log("setting it to " + vis);
+
     collection.update({
         _id: req.body.id
     }, {
