@@ -54,7 +54,7 @@ router.get('/article/:title', function(req, res, next) {
     var collection = req.db.get("articles");
     var title = (req.params.title) ? req.params.title.toLowerCase() : "";
     if (title.length > 0) {
-        console.log("finding url " + title);
+
         collection.find({
             url: title
         }, {}, function(e, docs) {
