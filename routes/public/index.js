@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
     collection.find({}, {
         limit: 17,
         sort: {
-            date: 1
+            date: -1
         }
     }, function(e, docs) {
       res.render("home", {data: docs});
@@ -23,7 +23,7 @@ router.get('/section/:section', function(req, res, next) {
     collection.find({section: sectionId}, {
         limit: 12,
         sort: {
-            date: 1
+            date: -1
         }
     }, function(e, docs) {
       res.render("section", {section: util.idToSection(sectionId), title:"Recent environemental articles in the section " + util.idToSection(sectionId),  data: docs});
